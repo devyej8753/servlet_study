@@ -29,7 +29,7 @@ public class GetSendServlet extends HttpServlet {
 		int userAge = Integer.parseInt(request.getParameter("userAge"));
 		// 4. checkbox 타입
 		String[] hobby = request.getParameterValues("hobby");
-		
+		// 하이
 		System.out.println("이름 : "+userName);
 //		System.out.println("성별 : "+userGender);
 		// 성별 정보가 1-> 남성 , 그외에 여성
