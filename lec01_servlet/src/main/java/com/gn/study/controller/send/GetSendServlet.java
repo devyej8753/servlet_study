@@ -32,7 +32,7 @@ public class GetSendServlet extends HttpServlet {
 		// 하이
 		System.out.println("이름 : "+userName);
 //		System.out.println("성별 : "+userGender);
-		// 성별 정보가 1-> 남성 , 그외에 여성
+		// 성별 정보가 1-> 남성 , 그외에 여성   
 		if(userGender.equals("1")) {
 			userGender = "남성";
 		}else {
@@ -58,7 +58,9 @@ public class GetSendServlet extends HttpServlet {
 			}
 			System.out.println("취미 : "+String.join(",", arr));
 		}
-		
+//		if(hobby == null) {
+//			System.out.println("취미 : 없음");
+//		}else {
 //		for(String a : hobby) {
 //				if(a.equals("1")) {
 //					a = "야구";
@@ -66,10 +68,9 @@ public class GetSendServlet extends HttpServlet {
 //					a = "농구";
 //				}else if(a.equals("3")) {
 //					a = "축구";
-//				}else {
-//					
-//				}
+//				}	
 //				System.out.println("취미 : "+a);
+//		}
 				
 		// 1. 출력할 문서형태 선언
 		response.setContentType("text/html; charset=UTF-8");
