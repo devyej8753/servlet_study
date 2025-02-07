@@ -42,7 +42,6 @@ public class BookReservationController extends HttpServlet{
 		price += addPrice;
 		
 		
-		
 		RequestDispatcher view = req.getRequestDispatcher("views/bookConfirmation.jsp");
 		req.setAttribute("name", userName);
 		req.setAttribute("phone",userPhone);
