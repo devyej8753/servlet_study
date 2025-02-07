@@ -27,6 +27,7 @@ public class ReceiveMsgServlet extends HttpServlet {
 		RequestDispatcher view = request.getRequestDispatcher("/views/msgShow.jsp");
 		request.setAttribute("msg", msg);
 		view.forward(request, response);
+		
 	}
 
 	
