@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>비동기 통신ㄱ</title>
+<title>비동기 통신</title>
 </head>
 <body>
 	<h1>JavaScript</h1>
