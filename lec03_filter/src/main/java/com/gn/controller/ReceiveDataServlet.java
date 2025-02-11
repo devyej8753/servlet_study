@@ -22,7 +22,7 @@ public class ReceiveDataServlet extends HttpServlet{
 		String testData = req.getParameter("test_data");
 		System.out.println("데이터 : "+testData);
 	}
-
+ 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
