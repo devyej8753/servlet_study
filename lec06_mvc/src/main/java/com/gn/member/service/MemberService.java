@@ -30,6 +30,13 @@ public class MemberService {
 		close(conn);
 		return result;
 	}
+	public Member MemberselectOne(int no) {
+		Connection conn = getConnection();
+		Member m = MemberDao.MemberselectOne(no, conn);
+		close(conn);
+		return m;
+	}
+	
 	
 
 	

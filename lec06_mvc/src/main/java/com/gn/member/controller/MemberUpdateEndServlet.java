@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
@@ -37,7 +38,14 @@ public class MemberUpdateEndServlet extends HttpServlet {
 		JSONObject obj = new JSONObject();
 		obj.put("res_code", "500");
 		obj.put("res_msg", "정보수정 오류가 발생하였습니다.");
+		
+		m = new MemberService().MemberselectOne(no);
+		
 		if(result > 0) {
+			HttpSession session = request.getSession(false);
+			session.setAttribute("member", m);
+			session.setMaxInactiveInterval(60*30);
+			
 			obj.put("res_code", "200");
 			obj.put("res_msg", "정상적으로 정보수정 되었습니다.");
 		}

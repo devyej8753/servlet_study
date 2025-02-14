@@ -4,6 +4,7 @@ import static com.gn.common.sql.JDBCTemplate.close;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import com.gn.member.vo.Member;
 public class MemberDao {
@@ -53,5 +54,31 @@ public class MemberDao {
 		return result;
 		
 	}
-	
+
+	public static Member MemberselectOne(int no, Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Member m = null;
+		try {
+			String sql = "SELECT *"
+					+ " FROM member"
+					+ " WHERE member_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m = new Member();
+				m.setMemberNo(rs.getInt("member_no"));
+				m.setMemberId(rs.getString("member_id"));
+				m.setMemberPw(rs.getString("member_pw"));
+				m.setMemberName(rs.getString("member_name"));
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return m;
+	}
 }
