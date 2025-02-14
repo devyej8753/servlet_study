@@ -24,6 +24,13 @@ public class MemberService {
 		return result;
 		
 	}
+	public int memberUpdateEnd(Member m) {
+		Connection conn = getConnection();
+		int result = mbd.memberUpdateEnd(m,conn);
+		close(conn);
+		return result;
+	}
+	
 
 	
 
