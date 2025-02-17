@@ -9,12 +9,12 @@ public class Board {
 	private int boardWriter;
 	private LocalDateTime regDate;
 	private LocalDateTime modDate;
+	private String memberName;
 	
 	public Board() {}
 	
 	public Board(int boardNo, String boardTitle, String boardContent, int boardWriter, LocalDateTime regDate,
 			LocalDateTime modDate) {
-		super();
 		this.boardNo = boardNo;
 		this.boardTitle = boardTitle;
 		this.boardContent = boardContent;
@@ -22,6 +22,13 @@ public class Board {
 		this.regDate = regDate;
 		this.modDate = modDate;
 	}
+	public String getMemberName() {
+		return memberName;
+	}
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+	
 	public int getBoardNo() {
 		return boardNo;
 	}

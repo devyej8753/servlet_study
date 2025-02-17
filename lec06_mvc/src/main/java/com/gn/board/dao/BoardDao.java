@@ -6,11 +6,57 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gn.board.vo.Attach;
 import com.gn.board.vo.Board;
 public class BoardDao {
-
+	
+	public List<Board> selectBoardList(Connection conn){
+		// 게시글 번호(board_no)
+		// 게시글 제목(board_title)
+		// 게시글 내용(board_content)
+		// 게시글 작성자(board_writer)
+		// 게시글 작성자의 닉네임()
+		// 게시글 등록일(reg_date)
+		// 게시글 수정일(mod_date)
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<Board> list = new ArrayList<Board>();
+		try {
+			String sql = "SELECT b.board_no "
+					+ ",b.board_title "
+					+ ",b.board_content "
+					+ ",b.board_writer "
+					+ ",m.member_name "
+					+ ",b.reg_date "
+					+ ",b.mod_date "
+					+ "FROM `board` b "
+					+ "JOIN `member` m "
+					+ "ON b.board_writer = m.member_no";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Board b = new Board();
+				b.setBoardNo(rs.getInt("board_no"));
+				b.setBoardTitle(rs.getString("board_title"));
+				b.setBoardContent(rs.getString("board_content"));
+				b.setBoardWriter(rs.getInt("board_writer"));
+				b.setMemberName(rs.getString("member_name"));
+				b.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
+				b.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
+				list.add(b);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return list;
+	}
+	
 	public int insertBoard(Board b, Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;

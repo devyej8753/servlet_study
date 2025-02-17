@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.json.simple.JSONObject;
 
 import com.gn.board.service.BoardService;
 import com.gn.board.vo.Attach;
@@ -93,6 +94,24 @@ public class BoardCreateEndServlet extends HttpServlet {
 			// 2. 지정한 경로에 파일 업로드 되어있는지 확인
 			int result = new BoardService().createBoard(b,a);
 			
+//			RequestDispatcher view = request.getRequestDispatcher("/views/board/create_fail.jsp");
+			JSONObject obj = new JSONObject();
+			if(result > 0) {
+//				view=request.getRequestDispatcher("/views/board/create_success.jsp");
+				obj.put("res_code","200");
+				obj.put("res_msg", "정상적으로 게시글 등록");
+			}else {
+				obj.put("res_code","500");
+				obj.put("res_msg", "게시글 등록 중 오류가 발생");
+				String deletePath = a.getAttachPath();
+				File deleteFile = new File(deletePath);
+				if(deleteFile.exists()) {
+					deleteFile.delete();
+				}
+			}
+			response.setContentType("application/json; charset=utf-8");
+			response.getWriter().print(obj);
+//			view.forward(request, response);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
