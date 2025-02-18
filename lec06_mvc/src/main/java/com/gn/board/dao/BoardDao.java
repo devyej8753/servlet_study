@@ -13,7 +13,31 @@ import com.gn.board.vo.Attach;
 import com.gn.board.vo.Board;
 public class BoardDao {
 	
-	public List<Board> selectBoardList(Connection conn){
+	public int selectBoardCount(Connection conn, Board option) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+		try {
+			String sql = "SELECT COUNT(*) FROM board";
+			if(option.getBoardTitle() != null) {
+				sql += "WHERE board_title LIKE CONCAT('%','"+option.getBoardTitle()+"','%')";
+			}
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = rs.getInt(1);
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public List<Board> selectBoardList(Connection conn, Board option){
 		// 게시글 번호(board_no)
 		// 게시글 제목(board_title)
 		// 게시글 내용(board_content)
@@ -34,7 +58,13 @@ public class BoardDao {
 					+ ",b.mod_date "
 					+ "FROM `board` b "
 					+ "JOIN `member` m "
-					+ "ON b.board_writer = m.member_no";
+					+ "ON b.board_writer = m.member_no ";
+			if(option.getBoardTitle() != null) {
+				sql += "WHERE board_title LIKE CONCAT('%','"+option.getBoardTitle()+"','%') ";
+			}
+			///////추가///////
+			sql += "LIMIT "+option.getLimitPageNo()+", "+option.getNumPerPage();
+			
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
