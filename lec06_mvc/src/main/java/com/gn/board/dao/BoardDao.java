@@ -13,12 +13,48 @@ import com.gn.board.vo.Attach;
 import com.gn.board.vo.Board;
 public class BoardDao {
 	
+	public Board selectBoardOne(Connection conn, int boardNo){
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		Board board = null;
+		try {
+			String sql = "SELECT b.*, m.member_name , a.new_name "
+					+ "FROM `board` b "
+					+ "JOIN `member` m "
+					+ "ON b.board_writer = m.member_no "
+					+ "JOIN `attach` a ON b.board_no = a.board_no "
+					+ "WHERE board_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, boardNo);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				board = new Board();
+				board.setBoardNo(rs.getInt("board_no"));
+				board.setBoardTitle(rs.getString("board_title"));
+				board.setBoardContent(rs.getString("board_content"));
+				board.setBoardWriter(rs.getInt("board_writer"));
+				board.setMemberName(rs.getString("member_name"));
+				board.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
+				board.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
+				board.setNewName(rs.getString("new_name"));
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}
+		return board;
+	}
+	
+	
 	public int selectBoardCount(Connection conn, Board option) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int result = 0;
 		try {
-			String sql = "SELECT COUNT(*) FROM board";
+			String sql = "SELECT COUNT(*) FROM board ";
 			if(option.getBoardTitle() != null) {
 				sql += "WHERE board_title LIKE CONCAT('%','"+option.getBoardTitle()+"','%')";
 			}

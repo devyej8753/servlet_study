@@ -30,7 +30,7 @@ rel="stylesheet" type="text/css">
 			</div>
 		</div>
 	</section>
-	<script type="text/javascript">
+	<script>
 		const createBoardForm = function() {
 			let form = document.create_board_form;	
 			if(!form.board_title.value){
