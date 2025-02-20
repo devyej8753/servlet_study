@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -153,6 +155,32 @@
 			마지막인가요? : ${vs.last}
 		</p>
 	</c:forEach>
+	<hr>
+	<h1>JSTL Formatting Library</h1>
+	<h2>1. formatNumber</h2>
+	<fmt:formatNumber value="1234.567" type="number"/><br>
+	<fmt:formatNumber value="1234.567" type="currency"/><br>
+	
+	<fmt:setLocale value="en_us"/>
+	<fmt:formatNumber value="1234.567" type="currency"/><br>
+	<fmt:formatNumber value="0.875" type="percent"/><br>
+	
+	<fmt:formatNumber value="1234.567" pattern="#,###.##"/><br>
+	<fmt:formatNumber value="1234.5" pattern="00000.0"/><br>
+	<h2>2. formatDate</h2>
+	<c:set var="now" value="<%=new java.util.Date()%>"/>
+	<fmt:formatDate value="${now }" type="date"/><br>
+	<fmt:formatDate value="${now }" pattern="yyyy-MM-dd HH:mm:ss"/>
+	<br>
+	<fmt:parseDate value="2025-02-20" pattern="yyyy-MM-dd" var="parsedDate"/>
+	<fmt:formatDate value="${parsedDate}" pattern="yy년MM월"/>
+	<br>
+	<h1>JSTL Function Library</h1>
+	<c:set var="data" value="How Are You? I am fine"/>
+	<p><c:out value="${fn:toUpperCase(data)}"/></p>
+	<p><c:out value="${fn:replace(data,'fine','apple')}"/></p>
+	<p><c:out value="${fn:contains(data,'You')?'O':'X' }"/></p>
+	
 	
 </body>
 </html>
