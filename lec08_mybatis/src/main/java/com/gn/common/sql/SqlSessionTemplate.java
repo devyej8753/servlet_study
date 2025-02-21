@@ -22,7 +22,10 @@ public class SqlSessionTemplate {
 			// 4. SqlSession 객체 생성
 			// 매개변수 -> AutoCommti여부 지정 -> default : true
 			// AutoCommti 끌때 -> false
-			session = factory.openSession();
+			// (1). 매개변수 X : AutoCommti X
+			// (2). true : AutoCommti O
+			// (3). false : AutoCommti X
+			session = factory.openSession(true);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
