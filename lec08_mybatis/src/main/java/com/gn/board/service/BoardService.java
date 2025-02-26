@@ -25,9 +25,9 @@ public class BoardService {
 		return result;
 	}
 	
-	public int deleteBoard(Board board) {
+	public int deleteBoard(int boardNo) {
 		SqlSession session = getSqlSession();
-		int result = new BoardDao().deleteBoard(session,board);
+		int result = new BoardDao().deleteBoard(session,boardNo);
 		session.close();
 		return result;
 	}

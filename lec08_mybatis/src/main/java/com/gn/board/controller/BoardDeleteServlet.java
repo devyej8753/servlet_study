@@ -18,16 +18,14 @@ public class BoardDeleteServlet extends HttpServlet {
     public BoardDeleteServlet() {
         super();
     }
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String temp= request.getParameter("board_no");
-		int boardNo = 0;
-		if(temp != null) boardNo = Integer.parseInt(temp);
-		Board board = new Board();
-		board.setBoardNo(boardNo);
-		
-		int result = new BoardService().deleteBoard(board);
-		
-		
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int boardNo = Integer.parseInt(request.getParameter("board_no"));
+		int result = new BoardService().deleteBoard(boardNo);
+		if(result > 0) {
+			System.out.println("참 잘 삭제했어요");
+		} else {
+			System.out.println("삭제 실패!!");
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
